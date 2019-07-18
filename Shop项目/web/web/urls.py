@@ -17,11 +17,17 @@ from django.conf.urls import url,include
 from django.contrib import admin
 
 urlpatterns = [
-    # url(r'^admin/', admin.site.urls),
+
+    # 富文本编辑器
+    url(r'^ueditor/', include('ueditor.urls')),
 
     # 后台url
     url(r'^myadmin/', include('myadmin.urls')),
     
     # 前台url
     url(r'^shop', include('shop.urls')),
+    url(r'^', include('shop.urls')),
+
+    # url(r'^admin/', admin.site.urls),
+
 ]

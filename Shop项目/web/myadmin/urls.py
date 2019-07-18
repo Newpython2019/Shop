@@ -5,6 +5,15 @@ urlpatterns = [
 	# 后台主界面跳转
     url(r'^$',IndexViews.index,name="myadmin_index"),
 
+    # 登录页
+    url(r'^login/$',IndexViews.myadmin_login,name="myadmin_login"),
+    # 登录处理
+    url(r'^dologin/$',IndexViews.myadmin_dologin,name="myadmin_dologin"),
+    # 验证码
+    url(r'^verifycode/$',IndexViews.verifycode,name="myadmin_vcode"),
+    # 退出
+    url(r'^logout/$',IndexViews.myadmin_logout,name="myadmin_logout"),
+
     # 用户管理
     # 用户添加列表
     url(r'^user/add/$',UsersViews.user_add,name="myadmin_user_add"),
@@ -30,8 +39,10 @@ urlpatterns = [
 
     # 商品管理
     # 商品添加页
-    url(r'^Goods/add/$',GoodsViews.goods_add,name="myadmin_goods_add"),
+    url(r'^goods/add/$',GoodsViews.goods_add,name="myadmin_goods_add"),
     # 商品添加
-    url(r'^Goods/insert/$',GoodsViews.goods_insert,name="myadmin_goods_insert")
+    url(r'^goods/insert/$',GoodsViews.goods_insert,name="myadmin_goods_insert"),
+    # 商品列表页
+    url(r'^goods/index/$',GoodsViews.goods_index,name="myadmin_goods_index"),
 
 ]

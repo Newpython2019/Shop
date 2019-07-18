@@ -48,5 +48,16 @@ def goods_insert(request):
 	return HttpResponse('<script>alert("商品添加成功");history.back(-1)</script>')
 	# return HttpResponse('goods_insert')
 
+# 商品列表
+def goods_index(request):
+	# 获取所有的商品对象
+	data = Goods.objects.all()
+
+	# 分配数据
+	context = {'goodslist':data}
+
+	# 加载模板
+	return render(request,'myadmin/goods/index.html',context)
+
 
 
