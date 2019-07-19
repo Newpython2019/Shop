@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>注册</title>
-		<link rel="stylesheet" type="text/css" href="./css/login.css"/>
+		<link rel="stylesheet" type="text/css" href="/static/myhome/css/login.css"/>
 	</head>
 	<body>
 		<div id="append"></div>
@@ -11,11 +11,11 @@
 			<div class="head_cent head_cwo ClearFix">
 				<div class="h_logo">
 					<a href="">
-						<img src="./image/logo.jpg"/>
+						<img src="/static/myhome/image/logo.jpg"/>
 					</a>
 				</div>
 				<div class="h_right">
-					<img src="./image/top_center.jpg"/>
+					<img src="/static/myhome/image/top_center.jpg"/>
 				</div>
 			</div>
 		</div>
@@ -23,7 +23,7 @@
 			<div class="logo_box ClearFix">
 				<div class="login_b_l ClearFix">
 					<a href="" title="出发">
-						<img src="./image/register.jpg" alt="出发"/>
+						<img src="/static/myhome/image/register.jpg" alt="出发"/>
 					</a>
 				</div>
 				<div class="login_b_r ClearFix">
@@ -31,14 +31,14 @@
 					    <div class="login_h2 ClearFix">
 						    <h2>用户注册</h2>
 						    <div class="lognrtop">
-								已有账号<a href="login.html">在此登录</a>
+								已有账号<a href="{% url 'shop_login' %}">在此登录</a>
 							</div>
 						</div>
 					  <div class="co"> 
                         <div class="form">
-                        <form id="register_form" method="post" action="">
+                        <form id="register_form" method="POST" action="{% url 'shop_doregister' %}">
                             <div class="item">
-                                <input placeholder="请输入手机号码" class="itxt" autocomplete="off" tabindex="1" maxlength="11" name="mobile" id="mobile" type="text">
+                                <input placeholder="请输入手机号码" class="itxt" autocomplete="off" tabindex="1" maxlength="11" name="phone" id="phone" type="text">
                                 <div class="err_box">
                                     <div class="err_msg2" style="display: none;" id="error_mobile">请输入11位手机号码</div>
                                 </div>
@@ -67,20 +67,22 @@
                                 </div>
                             </div>
                             <div class="item item3">
-                                <input placeholder="验证码" autocomplete="off" tabindex="6" maxlength="4" size="10" class="itxt itxt_yzm" name="code" id="code" type="text">
+                                <input placeholder="验证码" autocomplete="off" tabindex="6" maxlength="4" size="10" class="itxt itxt_yzm" name="code" id="code" type="text" style="position: relative;width: 180px">
+                                <img id='verifycode' src="{% url 'shop_code' %}" alt="shop_code" style="position: absolute;right:20px"/>
                                 <div class="err_box">
                                     <div class="err_msg2" style="display: none;" id="error_captcha">请输入右侧验证码</div>
                                 </div>
                             </div>
                             <div class="item item5">
                                 <div class="login-btn">
-                                    <a id="loginsubmit" tabindex="7" class="btn-img btn-entry" href="javascript:;">立即注册</a>
+                                    <a id="loginsubmit" tabindex="7" class="btn-img btn-entry" href="javascript:document:register_form.submit();">立即注册</a>
                                 </div>
                                 <div class="agree">
                                     <input class="jdcheckbox" tabindex="8" name="agree" id="agree" checked="checked" type="checkbox">
                                     <label for="autoLogin">注册即表示同意快乐购<span><a href="" target="_blank">《用户服务协议》</a></span>条款</label>
                                 </div>
                             </div>
+                            {% csrf_token %}
                         </form>
                         </div>
 					   </div>
