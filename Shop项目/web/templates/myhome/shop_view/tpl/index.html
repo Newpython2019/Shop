@@ -70,12 +70,20 @@
 			<div class="header_top">
 				<div class="w1200">
 					<div class="h_t_l">
-						<div class="login_l">
-						    <span>欢迎来到快乐购!</span>
-						    <a class="a_login" href="register.html">[登录]</a>
-						    <span class="line"></span>
-						    <a class="" href="login.html">[注册]</a>
-						</div>
+						<!-- 判断是否已经登录 -->
+						{% if request.session.vipUser %}
+							<div class="login_l">
+							    <span>欢迎来到快乐购!</span>
+							    <a class="a_login" href="{% url 'shop_logout' %}">[退出登录]</a>
+							</div>
+						{% else %}
+							<div class="login_l">
+							    <span>欢迎来到快乐购!</span>
+							    <a class="a_login" href="{% url 'shop_login' %}">[登录]</a>
+							    <span class="line"></span>
+							    <a class="" href="{% url 'shop_register' %}">[注册]</a>
+							</div>
+						{% endif %}
 					</div>
 					<div class="h_t_r">
 						<ul>
@@ -97,7 +105,7 @@
 								<div class="down_load">
                                     <div class="down_border">
                                         <b class="icon_top"></b>
-                                        <img style="" src="/static/myhomeimage/down_load_20160411.png">
+                                        <img style="" src="/static/myhome/image/down_load_20160411.png">
                                         <p>快乐生活 快乐购</p>
                                     </div>
                                 </div>

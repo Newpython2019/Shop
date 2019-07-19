@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'^myadmin/', include('myadmin.urls')),
     
     # 前台url
-    url(r'^shop', include('shop.urls')),
+    url(r'^shop/', include('shop.urls')),
 ]
