@@ -44,5 +44,8 @@ urlpatterns = [
     url(r'^goods/insert/$',GoodsViews.goods_insert,name="myadmin_goods_insert"),
     # 商品列表页
     url(r'^goods/index/$',GoodsViews.goods_index,name="myadmin_goods_index"),
+    # 用户数据编辑
+    url(r'^goods/edit/$',GoodsViews.goods_edit,name="myadmin_goods_edit"),
+
 
 ]

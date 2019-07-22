@@ -115,20 +115,23 @@ def user_edit(request):
             print(myfile)
             if myfile:
                 # 如果有新头像上传，则先删除原头像图片
-                os.remove(BASE_DIR+ob.pic_url)
+                if ob.pic_url:
+                    os.remove(BASE_DIR+ob.pic_url)
                 # 再上传新的头像
                 ob.pic_url = uploads_pic(myfile)
         except Exception as e:
             print('头像更新操作',e)
-        
+        # 判断是否有传值
+        if request.POST.get('age'):
+            ob.age = request.POST.get('age')
+
 
         # 更新其它字段
         try:
-            ob.nikename = request.POST.get('nikename')
-            ob.email = request.POST.get('email')
-            ob.phone = request.POST.get('phone')
-            ob.age = request.POST.get('age')
-            ob.sex = request.POST.get('sex')
+            ob.nikename = request.POST.get('nikename',None)
+            ob.email = request.POST.get('email',None)
+            ob.phone = request.POST.get('phone',None)
+            ob.sex = request.POST.get('sex',None)
             ob.save()
         except Exception as e:
             print('字段更新操作',e)

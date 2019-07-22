@@ -14,14 +14,14 @@
 		<header class="htmleaf-header">
 			<h1>登录注册界面 <span></span></h1>
 			<div class="htmleaf-links">
-				<a class="htmleaf-icon icon-htmleaf-home-outline" href="{% url 'shop_home' %}" title="商城首页" target="_blank"><span> 商城首页</span></a>
+				<a class="htmleaf-icon icon-htmleaf-home-outline" href="{% url 'shop_homepage' %}" title="商城首页" target="_blank"><span> 商城首页</span></a>
 				<a class="htmleaf-icon icon-htmleaf-arrow-forward-outline" href="javascript:history.go(-1);" title="返回上一页" target="_blank"><span> 返回上一页</span></a>
 			</div>
 		</header>
 		<div class="login-wrap">
 			<div class="login-html">
 				<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">登录</label>
-				<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">注册</label>
+				<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"></label>
 				<div class="login-form">
 					<form action="{% url 'myadmin_dologin' %}" method="POST">
 						{% csrf_token %}
@@ -44,11 +44,11 @@
 							</div>
 							<div class="hr"></div>
 							<div class="foot-lnk">
-								<a href="#forgot">忘记密码?</a>
+								<a href="#">忘记密码?</a>
 							</div>
 						</div>
 					</form>
-					<div class="sign-up-htm">
+					<!-- <div class="sign-up-htm">
 						<div class="group">
 							<label for="user" class="label">Username</label>
 							<input id="user" type="text" class="input">
@@ -72,13 +72,12 @@
 						<div class="foot-lnk">
 							<label for="tab-1">Already Member?</a>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
 		<div class="related">
 		</div>
 	</div>
-	
 </body>
 </html>

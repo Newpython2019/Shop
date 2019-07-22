@@ -20,9 +20,9 @@
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <a href="{% url 'myadmin_cate_add' %}" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 新增</a>
-                                    <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-save"></span> 保存</button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-archive"></span> 审核</button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</button>
+                                    <!-- <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-save"></span> 保存</button> -->
+                                    <!-- <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-archive"></span> 审核</button> -->
+                                    <!-- <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</button> -->
                                 </div>
                             </div>
                         </div>
@@ -32,10 +32,10 @@
                         <div class="am-form-group tpl-table-list-select">
                             <select name="types" data-am-selected="{btnSize: 'sm'}" style="display: none;">
                               <option value="all" {% if request.GET.types == 'all' %} selected {% endif %}>所有类别</option>
-                              <option value="phone" {% if request.GET.types == 'phone' %} selected {% endif %}>手机号</option>
+                              <!-- <option value="phone" {% if request.GET.types == 'phone' %} selected {% endif %}>手机号</option>
                               <option value="id" {% if request.GET.types == 'id' %} selected {% endif %}>ID</option>
                               <option value="nikename" {% if request.GET.types == 'nikename' %} selected {% endif %}>昵称</option>
-                              <option value="email" {% if request.GET.types == 'email' %} selected {% endif %}>邮箱</option>
+                              <option value="email" {% if request.GET.types == 'email' %} selected {% endif %}>邮箱</option> -->
                             </select>
                         </div>
                     </div>

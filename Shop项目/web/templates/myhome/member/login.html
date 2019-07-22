@@ -10,7 +10,7 @@
 		<div class="full_sc">
 			<div class="head_cent head_cwo ClearFix">
 				<div class="h_logo">
-					<a href="">
+					<a href="{% url 'shop_homepage' %}">
 						<img src="/static/myhome/image/logo.jpg"/>
 					</a>
 				</div>
@@ -29,9 +29,9 @@
 				<div class="login_b_r ClearFix">
 					<div class="loginul ClearFix">
 						<div class="login_h2 ClearFix">
-							<h2>登录快乐购</h2>
+							<h2>登录</h2>
 							<div class="lognrtop">
-								还没有快乐购账号<a href="{% url 'shop_register' %}">快速注册</a>
+								还没有账号-><a href="{% url 'shop_register' %}">快速注册</a>
 							</div>
 						</div>
 						<div class="co">
@@ -39,26 +39,26 @@
 								<form id="mainForm" action="{% url 'shop_dologin' %}" method="POST">
 									{% csrf_token %}
 									<div class="item">
-									<input class="itxt" name="phone" placeholder="已验证手机/邮箱/用户名" value="" >
+									<input class="itxt" name="phone" placeholder="请输入登录账号" value="" >
 									    <div class="err_box">
-                                            <div class="err_msg2" style="display: none;">登录名可能是您的手机号、邮箱或用户名
+                                            <!-- <div class="err_msg2" style="display: none;">登录名可能是您的手机号、邮箱或用户名 -->
                                             </div>
                                         </div>
 									</div>
 									<div class="item">
                                         <input class="itxt" placeholder="请输入密码" name="password" id="password" type="password">
                                         <div class="err_box">
-                                            <div class="err_msg2" style="display: none;">您的密码可能为字母、数字或符号的组合</div>
+                                            <!-- <div class="err_msg2" style="display: none;">您的密码可能为字母、数字或符号的组合</div> -->
                                         </div>
 									</div>
-									<div class="item">
-										<input placeholder="验证码" autocomplete="off" maxlength="4" size="10" name="code" class="itxt itxt_yzm onfocustxt" tabindex="3" type="text" style="position: relative;width: 180px">
-										<img id='verifycode' src="{% url 'shop_code' %}" alt="shop_code" style="position: absolute;right:20px"/>
-                                        <div class="err_box">
-                                            <div class="err_msg2" style="display: none;" id="error_captcha">请输入右侧验证码，不区分大小写</div>
-                                        </div>
-									</div>
-									<div class="item item4">
+									<div class="item item3">
+		                                <input placeholder="验证码" autocomplete="off" tabindex="6" maxlength="4" size="10" class="itxt itxt_yzm" name="code" id="code" type="text" style="position: relative;width: 180px">
+		                                <img id='verifycode' src="{% url 'shop_code' %}" alt="shop_code" style="position: absolute;right:20px" onclick="this.src='{% url 'shop_code' %}'+'?'+Math.random()"/>
+		                                <!-- <div class="err_box">
+		                                    <div class="err_msg2" style="display: none;" id="error_captcha">请输入右侧验证码</div>
+		                                </div> -->
+		                            </div>
+		                            <div class="item item4">
 										<div class="safe ClearFix">
                                             <span>
                                             <input tabindex="4" class="jdcheckbox" name="autoLogin" id="autoLogin" checked="checked" type="checkbox">
@@ -69,29 +69,13 @@
                                             </span>
 										</div>
 									</div>
+									<!-- 登录按钮 -->
 									<div class="item">
 										<div class="login-btn">
-                                            <a tabindex="6" id="loginsubmit" class="btn-img btn-entry" href="javascript:document:mainForm.submit();">立即登录</a>
+										<button><a tabindex="6" id="loginsubmit" class="btn-img btn-entry">立即登录</a></button>
                                        </div>
 									</div>
 								</form>
-							</div>
-							<div class="container">
-								<h5>您可以使用以下账号登录</h5>
-								<ul>
-									<li>
-										<a class="li_q" href="" title="QQ"></a>
-									</li>
-									<li>
-										<a class="li_w" href="" title="微博"></a>
-									</li>
-									<li>
-										<a class="li_z" href="" title="支付宝"></a>
-									</li>
-									<li>
-										<a class="li_t" href="" title="淘宝"></a>
-									</li>
-								</ul>
 							</div>
 						</div>
 					</div>

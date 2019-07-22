@@ -2,11 +2,12 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>快乐购首页</title>
+		<title>Shop首页</title>
 		<link rel="stylesheet" type="text/css" href="/static/myhome/css/head.css"/>
 		<link rel="stylesheet" type="text/css" href="/static/myhome/css/index.css"/>
 		<link rel="stylesheet" type="text/css" href="/static/myhome/css/footer.css"/>
 		<script src="/static/myhome/js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<!-- 轮播图 -->
 		<script type="text/javascript">
 			$(function(){
 				//轮播图效果
@@ -18,7 +19,6 @@
 				    if(c==6){
 				    	c=0;
 				    }
-//				    alert(c);
 				    //让自己显示，兄弟元素隐藏
 				    $("#inBaner .big_eye_pic li").eq(c).stop().fadeIn(1800).siblings().fadeOut(800);
 				    //改变颜色
@@ -62,18 +62,22 @@
 				});
 			});
 		</script>
+		<!-- 轮播图 E-->
 	</head>
 	<body>
 		<!--顶部公用-->
+	    <!--头部-->
 		<div class="header">
 		<!--顶部导航-->
 			<div class="header_top">
 				<div class="w1200">
+					<!-- 登录注册 -->
 					<div class="h_t_l">
 						<!-- 判断是否已经登录 -->
 						{% if request.session.vipUser %}
 							<div class="login_l">
-							    <span>欢迎来到快乐购!</span>
+							    <span>欢迎来到快乐购,尊敬的</span>
+							    <span>{{ request.session.vipUser.nikename }}</span>
 							    <a class="a_login" href="{% url 'shop_logout' %}">[退出登录]</a>
 							</div>
 						{% else %}
@@ -85,6 +89,8 @@
 							</div>
 						{% endif %}
 					</div>
+					<!-- 登录注册 E -->
+					<!-- 功能列表 -->
 					<div class="h_t_r">
 						<ul>
 							<li>
@@ -120,13 +126,14 @@
 							</li>
 						</ul>
 					</div>
+					<!-- 功能列表 E-->
 				</div>
 			</div>
-		    <!--搜索-->
+		    <!--二级导航-->
 		    <div class="full_sc">
 	    	    <div class="w1200 header_conter">
 	    		    <div class="h_c_logo">
-	    			    <a href="index.html">
+	    			    <a href="{% url 'shop_homepage' %}">
 	    				    <img src="/static/myhome/image/logo.jpg"/>
 	    			    </a>
 	    		    </div>
@@ -134,19 +141,23 @@
 	    			    <img src="/static/myhome/image/top_center.jpg" style="width: 467px;29px"/>
 	    		    </div>
 	    		    <div class="h_c_search">
+	    		    	<!-- 搜索 -->
 	    			    <div class="search_input">
 	    			    	<form action="" method="post">
+	    			    		{% csrf_token %}
 	    			    		<input type="text" style="color: rgb(102, 102, 102);" name="keyword" class="text_search" placeholder="xx 手机" value="" />
 	    			    		<input type="submit" class="btn_search" value="搜索"/>
 	    			    	</form>
 	    			    </div>
+	    		    	<!-- 搜索 E-->
+	    			    <!-- 商品快捷 -->
 	    			    <div class="search_key">
 	    			    	<ul>
 	    			    		<li>
 	    			    			<a href="">太阳镜</a>
 	    			    		</li>
 	    			    		<li>
-	    			    			<a href="">婴儿</a>
+	    			    			<a href="">育儿</a>
 	    			    		</li>
 	    			    		<li>
 	    			    			<a href="">果蔬脆片</a>
@@ -161,12 +172,6 @@
 	    			    			<a href="">山地车</a>
 	    			    		</li>
 	    			    		<li>
-	    			    			<a href="">BB霜</a>
-	    			    		</li>
-	    			    		<li>
-	    			    			<a href="">乳胶枕</a>
-	    			    		</li>
-	    			    		<li>
 	    			    			<a href="">石英表</a>
 	    			    		</li>
 	    			    		<li>
@@ -174,7 +179,9 @@
 	    			    		</li>
 	    			    	</ul>
 	    			    </div>
+	    			    <!-- 商品快捷 E-->
 	    		    </div>
+	    		    <!-- 购物车模块 -->
 	    		    <div class="h_c_right">
 	    		    	<a href="" class="h_c_r_car">
 	    		    		<b class="b_car1"></b>
@@ -182,8 +189,10 @@
 	    		    		<b class="b_car2"></b>
 	    		    	</a>
 	    		    </div>
+	    		    <!-- 购物车模块 E-->
 	    	    </div>
 	        </div>
+		    <!--二级导航 E-->
 		    <!--菜单-->
 		    <div class="full_nav">
 		    	<div class="w1200">
@@ -193,7 +202,7 @@
 		    				<b class="b_down"></b>
 		    			</li>
 		    			<li class="home">
-		    				<a href="index.html" style="color: #C41F3A;">首页</a>
+		    				<a href="{% url 'shop_homepage' %}" style="color: #C41F3A;">首页</a>
 		    			</li>
 		    			<li>
 		    				<a href="refined.html">精选品牌</a>
@@ -207,8 +216,10 @@
 		    		</ul>
 		    	</div>
 	        </div>
+		    <!--菜单 E-->
 		</div>
 	    <!--头部end-->
+
 	    <!--轮播区域-->
 	    <div class="full_big_eye">
 	        <!--菜单-->
@@ -241,7 +252,7 @@
                         </div>
 	    			</li>
 	    			<li>
-	    				<span>个护美妆<b>></b></span>
+	    			<!-- 	<span>个护美妆<b>></b></span>
                         <div class="nav_type_list" data="1">
                             <ul>
                                 <li><a href="list.html" target="_blank">面部护肤</a></li>
@@ -369,10 +380,10 @@
                                 <li><a href="list.html" target="_blank">香水彩妆</a></li>
                             </ul>
                         </div>
-	    			</li>
+	    			</li> -->
 	    		</ul>
 	    	</div>
-	        <!--菜单-->
+	        <!--菜单E-->
 	        <!--轮播图-->
 	        <div class="full_eye">
 	        	<div id="inBaner">
@@ -414,9 +425,9 @@
 	        		</div>
 	        	</div>
 	        </div>
-	        <!--轮播图-->
+	        <!--轮播图E-->
 	    </div>
-	    <!--轮播区域-->
+	    <!--轮播区域E-->
 	    <!--商品区-->
 	    <div class="w1200">
 	    	<div class="her_top">
@@ -1047,6 +1058,7 @@
 	        		</ul>
 	        	</div>
 	        </div>
+	        <!-- 底部模块 -->
 	        <div class="footer_bottom">
 	        	<div class="w1200">
 	        		<p>
@@ -1065,14 +1077,17 @@
 	        		</p>
 	        	</div>
 	        </div>
+	        <!-- 底部模块 E-->
 	    </div>
 	    <!--底部end-->
-	    <!--左侧导航-->
+	    <!--右侧导航-->
 	    <div class="fixed_dh">
 	    	<div class="f_r_top">
 	    		<div class="top_i">
-	    		    <i class="icon_user"></i>
-	    		    <span>账号</span>
+	    			<a href="">
+		    		    <i class="icon_user"></i>
+		    		    <span>账号</span>
+	    			</a>
 	    		</div>
 	    		<div class="f_line">
 	    			<p class="f_line1"></p>
@@ -1109,12 +1124,17 @@
 	        		<i class="online_cus"></i>
 	        	</div>
 	        	<div class="top_is">
-	    		    <a href="javascipt:;">
+	    		    <a href="javascript:scroll(0,0)" id="top">
 	    		    	<i class="retrun_top"></i>
 	    		    </a>
 	    		</div>
 	        </div>
 	    </div>
-	    <!--左侧导航-->
+	    <!--右侧导航e-->
+	    <script type="text/javascript">
+		    window.onload=function(){
+		        $("top").animate({'margin-top':'0'},2000)
+		    }
+		</script>
 	</body>
 </html>

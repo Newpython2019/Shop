@@ -25,13 +25,9 @@ urlpatterns = [
     url(r'^myadmin/', include('myadmin.urls')),
     
     # 前台url
-<<<<<<< HEAD
-    url(r'^shop', include('shop.urls')),
+    url(r'^shop/', include('shop.urls')),
     url(r'^', include('shop.urls')),
 
     # url(r'^admin/', admin.site.urls),
 
-=======
-    url(r'^shop/', include('shop.urls')),
->>>>>>> 1cc8b4b7a3c6005cc63eec5167a969c006ccf7ea
 ]
