@@ -33,8 +33,9 @@
                                 {% for v in catelist %}
                                     {% if v.id == uinfo.cateid_id %}
                                         <option value="{{ v.id }}" {% if v.pid == 0 %} disabled {% endif %} selected>{{ v.sub }}{{ v.name }}</option>
+                                    {% elif v.id != uinfo.cateid_id %}
+                                        <option value="{{ v.id }}" {% if v.pid == 0 %} disabled {% endif %} >{{ v.sub }}{{ v.name }}</option>
                                     {% endif %}
-                                <option value="{{ v.id }}" {% if v.pid == 0 %} disabled {% endif %} >{{ v.sub }}{{ v.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>

@@ -1,35 +1,19 @@
-from django.shortcuts import render
-from django.http import HttpResponse,JsonResponse
-import os
+############### 用户模块 ###############
 from django.contrib.auth.hashers import make_password, check_password
-from myadmin.models import Users
-#引入绘图模块
+from django.http import HttpResponse,JsonResponse,Http404
 from PIL import Image, ImageDraw, ImageFont
-#引入随机函数模块
+from django.shortcuts import render
+from myadmin.models import Users
 import random
+import os
 import io
 
-
-# 商城首页视图
-def shop_homepage(request):
-
-	# 加载商城首页视图
-	return render(request,'myhome/index.html')
-
-# 列表
-def shop_list(request):
-
-	return render(request,'myhome/goods/list.html')
-
-# 商品详情
-def shop_info(request):
-
-	return render(request,'myhome/goods/info.html')
+# ==================== 登录 ====================
 
 # 显示登录页面
 def shop_login(request):
 
-	return render(request,'myhome/login.html')
+	return render(request,'myhome/member/login.html')
 
 # 执行登录
 def shop_dologin(request):
@@ -59,10 +43,12 @@ def shop_logout(request):
 	del request.session['vipUser']
 	return HttpResponse('<script>alert("退出成功");location.href="/shop"</script>')
 
+# ==================== 注册 ====================
+
 # 显示注册页面
 def shop_register(request):
 
-	return render(request,'myhome/register.html')
+	return render(request,'myhome/member/register.html')
 
 # 执行注册
 def shop_doregister(request):
@@ -108,6 +94,8 @@ def shop_doregister(request):
 		print('执行注册',e)
 
 	return HttpResponse('<script>alert("注册失败，请联系管理员");location.href="/shop/register/"</script>')
+
+# ==================== 验证 ====================
 
 # 验证码
 def shop_code(request):

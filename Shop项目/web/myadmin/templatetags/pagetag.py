@@ -1,7 +1,23 @@
 from django import template
+from myadmin.models import Cates
 register = template.Library()
 
 from django.utils.html import format_html
+from django.core.urlresolvers import reverse
+
+# 自定义模板导航标签
+@register.simple_tag
+def showNav():
+	# 获取一级分类
+	Cateslist = Cates.objects.filter(pid=0)
+	s = ''
+	for x in Cateslist:
+		s += '''
+		<li>
+			<a href="{url}">{name}</a>
+		</li>
+		'''.format(name=x.name,url=reverse('shop_list',args=(x.id,)))
+	return format_html(s)
 
 # 自定义分页标签
 @register.simple_tag

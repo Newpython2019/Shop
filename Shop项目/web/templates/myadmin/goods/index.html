@@ -21,8 +21,6 @@
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <a href="{% url 'myadmin_goods_add' %}" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 新增</a>
-                                    <!-- <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-save"></span> 保存</button> -->
-                                    <!-- <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-archive"></span> 审核</button> -->
                                     <!-- <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</button> -->
                                 </div>
                             </div>
@@ -32,7 +30,7 @@
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
                         <div class="am-form-group tpl-table-list-select">
                             <select name="types" data-am-selected="{btnSize: 'sm'}" style="display: none;">
-                              <option value="all" {% if request.GET.types == 'all' %} selected {% endif %}>暂未开发</option>
+                              <option value="all" {% if request.GET.types == 'all' %} selected {% endif %}>所有分类</option>
                              <!--  <option value="all" {% if request.GET.types == 'all' %} selected {% endif %}>全局搜索</option>
                               <option value="phone" {% if request.GET.types == 'phone' %} selected {% endif %}>手机号</option>
                               <option value="id" {% if request.GET.types == 'id' %} selected {% endif %}>ID</option>
@@ -77,8 +75,8 @@
                                     <td>
                                         <img src="{{ v.pic_url }}" class="tpl-table-line-img" alt="">
                                     </td>
-                                    <td class="am-text-middle">{{ v.goodsname }}</td>
-                                    <td class="am-text-middle">{{ v.title }}</td>
+                                    <td class="am-text-middle" style="width:170px;font-size:10px">{{ v.goodsname }}</td>
+                                    <td class="am-text-middle" style="width:170px;font-size:10px">{{ v.title }}</td>
                                     <td class="am-text-middle">{{ v.cateid.name }}</td>
                                     <td class="am-text-middle">{{ v.price }}</td>
                                     <td class="am-text-middle">{{ v.goodsnum }}</td>
@@ -114,7 +112,9 @@
                             <ul class="am-pagination tpl-pagination">
                                 <!-- <li class="am-disabled"><a href="#">«</a></li> -->
                                 <!-- <li class="am-active"><a href="#">1</a></li> -->
-                                
+                                {% load pagetag %}
+
+                                {% showpage userlist.paginator.num_pages request %}
                                 <!-- <li><a href="#">»</a></li> -->
                             </ul>
                         </div>

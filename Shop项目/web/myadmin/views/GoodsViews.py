@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from . CatesViews import get_cates_all
 from .. models import Cates,Goods
 from . UsersViews import uploads_pic
-
+import os
+from web.settings import BASE_DIR
 # Create your views here.
 
 # 商品添加 表单
@@ -21,7 +22,6 @@ def goods_insert(request):
 	try:
 		# 接收表单数据
 		data = request.POST.dict()
-		print(data)
 		data.pop('csrfmiddlewaretoken')
 
 		sku_price = request.POST.getlist('sku_price')
@@ -46,18 +46,22 @@ def goods_insert(request):
 		print('商品添加',e)
 
 	return HttpResponse('<script>alert("商品添加成功");history.back(-1)</script>')
-	# return HttpResponse('goods_insert')
 
 # 商品列表
 def goods_index(request):
-	# 获取所有的商品对象
-	data = Goods.objects.all()
-
-	# 分配数据
-	context = {'goodslist':data}
-
-	# 加载模板
-	return render(request,'myadmin/goods/index.html',context)
+    # 获取所有的商品对象
+    data = Goods.objects.all()
+    # 导入分页类
+    from django.core.paginator import Paginator
+    # 实例化分页类(每页显示几条)
+    p = Paginator(data,5)
+    # 获取当前页的数据
+    pageindex = request.GET.get('page',1)
+    userlist = p.page(pageindex)
+    # 分配数据
+    context = {'goodslist':data,'userlist':userlist}
+    # 加载模板
+    return render(request,'myadmin/goods/index.html',context)
 
 # 商品编辑
 def goods_edit(request):
@@ -71,37 +75,32 @@ def goods_edit(request):
 
     # 判断当前的请求方式
     if request.method == 'POST':
-    #     # 判断密码是否更新
-    #     if request.POST.get('password',None):
-    #     # 更新密码
-    #         ob.password = make_password(request.POST['password'], None, 'pbkdf2_sha256')
-        
-    #     # 判断头像是否更新
-    #     try:
-    #         myfile = request.FILES.get('pic',None)
-    #         print(myfile)
-    #         if myfile:
-    #             # 如果有新头像上传，则先删除原头像图片
-    #             if ob.pic_url:
-    #                 os.remove(BASE_DIR+ob.pic_url)
-    #             # 再上传新的头像
-    #             ob.pic_url = uploads_pic(myfile)
-    #     except Exception as e:
-    #         print('头像更新操作',e)
-    #     # 判断是否有传值
-    #     if request.POST.get('age'):
-    #         ob.age = request.POST.get('age')
+        # 判断所属分类是否更新
+        if request.POST.get('cateid'):
+            ob.cateid_id = request.POST.get('cateid')
+        # 判断头像是否更新
+        try:
+            myfile = request.FILES.get('pic',None)
+            if myfile:
+                # 如果有新头像上传，则先删除原头像图片
+                if ob.pic_url:
+                    os.remove(BASE_DIR+ob.pic_url)
+                # 再上传新的头像
+                ob.pic_url = uploads_pic(myfile)
+        except Exception as e:
+            print('头像更新操作',e)
 
-
-    #     # 更新其它字段
-    #     try:
-    #         ob.nikename = request.POST.get('nikename',None)
-    #         ob.email = request.POST.get('email',None)
-    #         ob.phone = request.POST.get('phone',None)
-    #         ob.sex = request.POST.get('sex',None)
-    #         ob.save()
-    #     except Exception as e:
-    #         print('字段更新操作',e)
+        # 更新其它字段
+        try:
+            ob.goodsname = request.POST.get('goodsname')
+            ob.title = request.POST.get('title')
+            ob.price = request.POST.get('price')
+            ob.goodsnum = request.POST.get('goodsnum')
+            if request.POST.get('goodsinfo'):
+                ob.goodsinfo = request.POST.get('goodsinfo')
+            ob.save()
+        except Exception as e:
+            print('字段更新操作',e)
         return HttpResponse('<script>alert("更新成功");location.href="/myadmin/goods/index/";</script>')
 
     else:
