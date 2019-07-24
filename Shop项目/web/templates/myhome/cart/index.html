@@ -1,0 +1,148 @@
+{% extends 'myhome/muban/muban.html' %}
+
+
+{% block title %}
+<title>购物车列表</title>
+{% endblock %}
+
+{% block css%}
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/static/cart/css/reset.css">
+<link rel="stylesheet" href="/static/cart/css/carts.css">
+{% endblock %}
+
+{% block con %}
+<section class="cartMain">
+
+		<!-- 标签栏 -->
+        <div class="cartMain_hd">
+            <ul class="order_lists cartTop">
+                <li class="list_chk">
+                    <!--所有商品全选-->
+                    <input type="checkbox" id="all" class="whole_check">
+                    <label for="all"></label>
+                    全选
+                </li>
+                <li class="list_con">商品信息</li>
+                <li class="list_info">商品参数</li>
+                <li class="list_price">单价</li>
+                <li class="list_amount">数量</li>
+                <li class="list_sum">金额</li>
+                <li class="list_op">操作</li>
+            </ul>
+        </div>
+		<!-- 标签栏 E-->
+		
+        <div class="cartBox">
+            <div class="shop_info">
+                <div class="all_check">
+                    <!--店铺全选-->
+                    <input type="checkbox" id="shop_a" class="shopChoice">
+                    <label for="shop_a" class="shop"></label>
+                </div>
+                <div class="shop_name">
+                    店铺：<a href="javascript:;">煎饼自营店</a>
+                </div>
+            </div>
+            <div class="order_content">
+            	{% for v in cartdata %}
+                <ul class="order_lists">
+                    <li class="list_chk">
+                        <input type="checkbox" id="checkbox_{{ v.id }}" class="son_check">
+                        <label for="checkbox_{{ v.id }}"></label>
+                    </li>
+                    <li class="list_con">
+                        <div class="list_img"><a href="javascript:;"><img src="{{ v.goodsid.pic_url }}" alt=""></a></div>
+                        <div class="list_text"><a href="javascript:;">{{ v.goodsid.goodsname }}</a></div>
+                    </li>
+                    <li class="list_info">
+                        <p>规格：默认</p>
+                        <p>描述：{{ v.goodsid.title }}</p>
+                        <p>描述：{{ v.id }}</p>
+                    </li>
+                    <li class="list_price">
+                        <p class="price">￥{{ v.goodsid.price }}</p>
+                    </li>
+                    <li class="list_amount">
+                        <div class="amount_box">
+                            <a href="javascript:;" class="reduce reSty" id="num_add{{ v.id }}">-</a>
+                            <input type="text" value="{{ v.num }}" class="sum" cartid="{{ v.id }}">
+                            <a href="javascript:;" class="plus" id="num_reduce{{ v.id }}">+</a>
+                        </div>
+                    </li>
+                    <li class="list_sum">
+                        <p class="sum_price">￥{{ v.goodsid.price }}</p>
+                    </li>
+                    <li class="list_op">
+                        <p class="del" ><a href="javascript:;" class="delBtn" cartid="{{ v.id }}">移除商品</a></p>
+                    </li>
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!--底部-->
+        <div class="bar-wrapper">
+            <div class="bar-right">
+                <div class="piece">已选商品<strong class="piece_num">0</strong>件</div>
+                <div class="totalMoney">共计: <strong class="total_text">0.00</strong></div>
+                <div class="calBtn"><a href="javascript:;">结算</a></div>
+            </div>
+        </div>
+        <!--底部 E-->
+</section>
+<section class="model_bg"></section>
+<section class="my_model">
+    <p class="title">删除商品<span class="closeModel">X</span></p>
+    <p>您确认要删除该商品吗？</p>
+    <div class="opBtn">
+    	<a href="javascript:;" class="dialog-sure">确定</a>
+    	<a href="javascript:;" class="dialog-close">关闭</a>
+    </div>
+</section>
+<script>
+	// 商品删除
+	$('.delBtn').click(function(){
+		// 获取当前要删除的购物车的id
+		var cartid = $(this).attr('cartid')
+		$('.dialog-sure').click(function(){
+			$.get('{% url 'shop_cart_del' %}',{'cartid':cartid},function(data){
+			// alert(data['msg'])
+		},'json')
+		})
+	})
+
+	// 商品数量增加
+	$('.plus').click(function(){
+		var inp = $(this).parents('.amount_box').find('.sum')
+		var num = Number(inp.val())
+		var cartid = inp.attr('cartid')
+		num ++
+		RequestcartNum(cartid,num)
+	})
+
+	// 商品数量减少
+	$('.reduce').click(function(){
+		var inp = $(this).parents('.amount_box').find('.sum')
+		var num = Number(inp.val())
+		var cartid = inp.attr('cartid')
+		num --
+		if(num<=1){
+			num = 1
+		}
+		RequestcartNum(cartid,num)
+	})
+
+	// 封装函数 发送ajax请求，修改购物车商品的购买数量
+	function RequestcartNum(cartid,num){
+		$.get('{% url 'shop_cart_edit' %}',{'cartid':cartid,'num':num},function(data){
+			// alert(data.msg)
+		},'json')
+	}
+</script>
+{% endblock %}
+
+{% block js %}
+<script src="/static/cart/js/carts.js"></script>
+{% endblock %}

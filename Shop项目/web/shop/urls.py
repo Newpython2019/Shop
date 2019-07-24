@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . views import MemberViews,OrderViews,IndexViews
+from . views import MemberViews,OrderViews,IndexViews,CartViews
 
 urlpatterns = [
 #################### 网站首页 ####################
@@ -29,7 +29,22 @@ urlpatterns = [
     url(r'^shop_code/$', MemberViews.shop_code,name='shop_code'),
 
 
-    # 购物车 增删改查
+###################### 购物车 ######################
+
+    # 添加
+    url(r'^cart/add/$', CartViews.shop_cart_add,name='shop_cart_add'),
+    # 列表
+    url(r'^cart/index/$', CartViews.shop_cart_index,name='shop_cart_index'),
+    # 删除
+    url(r'^cart/del/$', CartViews.shop_cart_del,name='shop_cart_del'),
+    # 清空
+    url(r'^cart/clear/$', CartViews.shop_cart_clear,name='shop_cart_clear'),
+    # 编辑
+    url(r'^cart/edit/$', CartViews.shop_cart_edit,name='shop_cart_edit'),
+
+
+
+
     # 订单  确认订单，提交订单，订单支付
     # 个人中心  我的订单 个人信息 地址管理
 

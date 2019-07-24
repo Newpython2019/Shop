@@ -13,7 +13,8 @@
                     <div class="nav_type_list" data="1">
                         <ul>
                             {% for vv in v.sub %}
-                            <li ><a href="{% url 'shop_list' vv.id %}" target="_blank">{{ vv.name }}</a></li>
+                            <!-- target="_blank" a链接里面的新页面 -->
+                            <li ><a href="{% url 'shop_list' vv.id %}" >{{ vv.name }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>

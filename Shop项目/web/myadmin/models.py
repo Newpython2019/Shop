@@ -44,3 +44,10 @@ class Goods(models.Model):
     # 0新品，1热卖，2，推荐，下架
     status = models.IntegerField(default=0)
     addtime = models.DateTimeField(auto_now_add=True)
+
+# 购物车模型
+class Cart(models.Model):
+    # id 用户uid 商品goodsid 数量num
+    uid = models.ForeignKey(to="Users",to_field="id")
+    goodsid = models.ForeignKey(to="Goods",to_field="id")
+    num = models.IntegerField()

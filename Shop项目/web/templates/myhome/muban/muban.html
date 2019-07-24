@@ -9,6 +9,13 @@
 		<link rel="stylesheet" type="text/css" href="/static/myhome/css/head.css"/>
 		<link rel="stylesheet" type="text/css" href="/static/myhome/css/footer.css"/>
 		<script src="/static/myhome/js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		{% block css%}
+
+		{% endblock %}
+		{% block js %}
+
+		{% endblock %}
+
 		<!-- 轮播图 -->
 		<script>
 			$(function(){
@@ -163,7 +170,7 @@
 	    		    </div>
 	    		    <!-- 购物车模块 -->
 	    		    <div class="h_c_right">
-	    		    	<a href="" class="h_c_r_car">
+	    		    	<a href="{% url 'shop_cart_index' %}" class="h_c_r_car">
 	    		    		<b class="b_car1"></b>
 	    		    		<span><i class="ci-count">0</i>我的购物车</span>
 	    		    		<b class="b_car2"></b>
@@ -315,7 +322,7 @@
 	    			<p class="f_line2"></p>
 	    		</div>
 	    		<div class="f_gwc">
-	    			<a href="">
+	    			<a href="{% url 'shop_cart_index' %}">
 	    				<i class="icon_car"></i>
 	    			    <span>购物车</span>
 	    			    <b class="car_num">0</b>

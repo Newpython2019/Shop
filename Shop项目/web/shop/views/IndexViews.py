@@ -2,26 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse,Http404
 from myadmin.models import Cates,Goods
 
-
-# 商城首页视图
-# def shop_homepage(request):
-
-# 	# 加载商城首页视图
-# 	return render(request,'myhome/homepage/homepage.html')
-
-# 列表
-# def shop_list(request):
-
-# 	return render(request,'myhome/homepage/list.html')
-
-# 商品详情
-def shop_info(request):
-
-	return render(request,'myhome/homepage/info.html')
-
-
-
-
 # 商城首页视图
 def shop_homepage(request):
 

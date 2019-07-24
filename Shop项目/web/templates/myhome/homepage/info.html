@@ -113,7 +113,7 @@
 						<span id="freight" class="pop_black">包邮</span>
 					</div>
 					<div class="detail_color">
-						<div class="model_wrap color_wrap">
+						<!-- <div class="model_wrap color_wrap">
 							<span class="pop_tit">颜色：</span>
 							<ul class="color_ul">
 								<li class="no_kc on">
@@ -150,7 +150,7 @@
 									<b></b>
 								</li>
 							</ul>
-						</div>
+						</div> -->
 						<div class="model_wrap count_wrap">
 							<span class="pop_tit">数量：</span>
 							<div class="wrap_input">
@@ -159,9 +159,9 @@
 								<input value="1" id="buy_num" class="text" onkeyup="this.value=this.value.replace(/\D/g, '');">
 							</div>
 						</div>
-						<div class="model_wrap">
+						<!-- <div class="model_wrap"> -->
 							<div class="model_submilt">
-								<div class="btn_goods_remind">添加到购物车</div>
+								<div class="btn_goods_remind" id="cart_add_btn">添加到购物车</div>
 							</div>
 							<!-- <div class="detail_ewm">
 								<p class="ewm_bg_img"></p>
@@ -170,7 +170,7 @@
 									<span class="fs_14">直播商品订购减 20 元</span>
 								</p>
 							</div> -->
-						</div>
+						<!-- </div> -->
 					</div>
 				</div>
 			</div>
@@ -187,17 +187,18 @@
 							<li><a href="javascript:;">用户评价</a></li>
 							<li><a href="javascript:;">为您推荐</a></li>
 						</ul>
-						<div class="fix_add_car">
+						<!-- <div class="fix_add_car">
 							<div class="db_price">
 								<em>¥</em>298.00
 							</div>
 							<a class="fixed_add_car" href="javascript:;">加入购物车</a>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="display">
+			<!-- 商品详情 -->
 			<div class="goods_box">
 				<div class="detail_lists">
 					<div class="d_h2">
@@ -208,7 +209,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="premeter_box">
+			<!-- 商品参数 -->
+			<!-- <div class="premeter_box">
 				<div class="detail_lists">
 					<div class="d_h2">
 						<h2>商品参数</h2>
@@ -217,7 +219,8 @@
 						
 					</div>
 				</div>
-			</div>
+			</div> -->
+			<!--用户评价 -->
 			<div class="appraise_box">
 		    	<div class="detail_lists ">
 		    		<div class="d_h2 ">
@@ -304,7 +307,8 @@
 		    	</div>
 		    </div>
 		    </div>
-		    <div class="recommend_box">
+		    <!-- 商品推荐 -->
+		    <!-- <div class="recommend_box">
 		    	<div class="detail_lists">
 		    		<div class="d_h2">
 		    			<h2>为您推荐</h2>
@@ -365,10 +369,31 @@
 		    		    </div>
 		    		</div>
 		    	</div>
-		    </div>
+		    </div> -->
 		</div>
 		<!--展示区域end-->
 	</div>
 </div>
+<!-- 添加购物车 -->
+<script>
+	$('#cart_add_btn').click(function(){
+		// 检测是否登录
+		var islogin = '{{ request.session.vipUser.id }}'
+		if(!islogin){
+			alert('请先登录');
+			location.href="/login/";
+		}
+		// 获取商品id 获取数量
+		var data = {}
+		data.goodsid = {{ goods.id }}
+		data.num = $('#buy_num').val()
+		// 发送ajax 加入到购物车
+		$.get('{% url 'shop_cart_add' %}',data,function(data){
+			alert(data['msg'])
+		},'json')
+	})
+</script>
+<!-- 添加购物车 E-->
+
 <!-- 内容区域E -->
 {% endblock %}
