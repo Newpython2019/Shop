@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse,Http404,JsonResponse
-from myadmin.models import Cates,Goods,Cart,Users
+from myadmin.models import Cates,Goods,Cart,Users,Order,OrderInfo
 
 # ==================== 购物车 ====================
 
@@ -29,7 +29,6 @@ def shop_cart_add(request):
         print('执行购物车的商品添加', e)
     return JsonResponse({'code': 1, 'msg': '加入购物车失败'})
 
-
 # 列表
 def shop_cart_index(request):
     # 获取当前用户的购物车数据
@@ -40,7 +39,6 @@ def shop_cart_index(request):
 
     # 加载模板
     return render(request, 'myhome/cart/index.html', context)
-
 
 # 删除
 def shop_cart_del(request):
@@ -60,7 +58,6 @@ def shop_cart_del(request):
 def shop_cart_clear(request):
     return HttpResponse('a')
 
-
 # 编辑
 def shop_cart_edit(request):
 	try:
@@ -74,3 +71,67 @@ def shop_cart_edit(request):
 	except Exception as e:
 		print('商品数量编辑',e)
 	return JsonResponse({'code': 1, 'msg': '编辑失败'})
+
+# ==================== 订单 ====================
+
+# 订单列表
+def shop_cart_confirm(request):
+
+    # 获取选择的购物车id
+    cartidstr = request.GET.get('cartids')
+    cartids = cartidstr.split(',')
+
+    # 把当前选择的购物车数据查询处理
+    data = Cart.objects.filter(id__in=cartids)
+
+    # 分配数据
+    context = {'cartdata':data}
+
+    return render(request, 'myhome/cart/confirm.html',context)
+
+# 订单创建
+def shop_cart_create(request):
+    data = request.POST.dict()
+    data.pop('csrfmiddlewaretoken')
+
+    # 创建订单
+    try:
+        ob = Order()
+        ob.uid = Users.objects.get(id=request.session.get('vipUser')['id'])
+        ob.username = data['true_name']
+        ob.phone = data['mob_phone']
+        ob.address = data['address']
+        ob.totalprice = 0
+        ob.save()
+    except Exception as e:
+        print('创建订单',e)
+        return HttpResponse("<script>alert('信息填写不正确');history.back(-1)</script>")
+
+    # 创建订单详情
+    try:
+        cartdata = Cart.objects.filter(id__in = data['cartids0'].split(','))
+        totalprice = 0
+        for x in cartdata:
+            obinfo = OrderInfo()
+            obinfo.orderid = ob
+            obinfo.goodsid = x.goodsid
+            obinfo.num = x.num
+            obinfo.save()
+            # 计算总价
+            totalprice += x.num*x.goodsid.price
+            # 删除购物车中已经下单的商品
+            x.delete()
+        ob.totalprice = totalprice
+        ob.save()
+    except Exception as e:
+        print('创建订单详情',e)
+        return HttpResponse("<script>alert('订单有误');history.back(-1)</script>")
+
+    # 重定向到支付页面
+    return HttpResponse('<script>alert("订单创建成功,请支付");location.href="/cart/pay/?orderid='+str(ob.id)+'"</script>')
+
+# 订单支付
+def shop_cart_pay(request):
+    orderid = request.GET.get('orderid')
+
+    return HttpResponse('请支付您的订单-订单号为:'+str(orderid))

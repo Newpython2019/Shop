@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . views import MemberViews,OrderViews,IndexViews,CartViews
+from . views import MemberViews,OrderViews,IndexViews,CartViews,CenterViews
 
 urlpatterns = [
 #################### 网站首页 ####################
@@ -28,8 +28,7 @@ urlpatterns = [
     # 验证码
     url(r'^shop_code/$', MemberViews.shop_code,name='shop_code'),
 
-
-###################### 购物车 ######################
+#################### 购物车 ######################
 
     # 添加
     url(r'^cart/add/$', CartViews.shop_cart_add,name='shop_cart_add'),
@@ -43,12 +42,22 @@ urlpatterns = [
     url(r'^cart/edit/$', CartViews.shop_cart_edit,name='shop_cart_edit'),
 
 
+#################### 订单 ######################
+
+    # 订单列表
+    url(r'^cart/confirm/$', CartViews.shop_cart_confirm, name='shop_cart_confirm'),
+    # 订单创建
+    url(r'^cart/create/$', CartViews.shop_cart_create, name='shop_cart_create'),
+    # 订单支付
+    url(r'^cart/pay/$', CartViews.shop_cart_pay, name='shop_cart_pay'),
+
+#################### 个人中心 ######################
+
+    # 我的订单
+    url(r'^center/order/$', CenterViews.shop_center_order, name='shop_center_order'),
 
 
-    # 订单  确认订单，提交订单，订单支付
-    # 个人中心  我的订单 个人信息 地址管理
-
-###################### 其他 ######################
+#################### 其他 ######################
 
     # 精选品牌
     url(r'^SelectedBrands/$', OrderViews.shop_SelectedBrands,name='shop_SelectedBrands'),
@@ -58,3 +67,7 @@ urlpatterns = [
     url(r'^BrandPavilion/$', OrderViews.shop_BrandPavilion,name='shop_BrandPavilion'),
 
 ]
+
+
+    # 订单  确认订单，提交订单，订单支付
+    # 个人中心  我的订单 个人信息 地址管理

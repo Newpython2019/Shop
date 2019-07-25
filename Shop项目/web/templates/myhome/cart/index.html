@@ -10,87 +10,169 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" href="/static/cart/css/reset.css">
 <link rel="stylesheet" href="/static/cart/css/carts.css">
+<link rel="stylesheet" type="text/css" href="/static/myhome/css/go.css"/>
 {% endblock %}
+
+{% block header %}
+<!--头部-->
+<div class="header">
+    <!--顶部导航-->
+    <div class="header_top">
+        <div class="w1200">
+            <!-- 登录标签 -->
+            <div class="h_t_l">
+                <!-- 判断是否已经登录 -->
+                {% if request.session.vipUser %}
+                    <div class="login_l">
+                        <span>欢迎来到快乐购,尊敬的</span>
+                        <span>{{ request.session.vipUser.nikename }}</span>
+                        <a class="a_login" href="{% url 'shop_logout' %}">[退出登录]</a>
+                    </div>
+                {% else %}
+                    <div class="login_l">
+                        <span>欢迎来到快乐购!</span>
+                        <a class="a_login" href="{% url 'shop_login' %}">[登录]</a>
+                        <span class="line"></span>
+                        <a class="" href="{% url 'shop_register' %}">[注册]</a>
+                    </div>
+                {% endif %}
+            </div>
+            <!-- 登录标签 E -->
+            <!-- 其它标签 -->
+            <div class="h_t_r">
+                <ul>
+                    <li>
+                        <a href="">订单查询</a>
+                        <span class="line"></span>
+                    </li>
+                    <li>
+                        <a href="">我的快乐购</a>
+                        <span class="line"></span>
+                    </li>
+                    <li>
+                        <i class="tel_icon"></i>
+                        <a href="">400-705-1111</a>
+                        <span class="line"></span>
+                    </li>
+                    <li>
+                        <a href="">下载快乐购app</a>
+                        <div class="down_load">
+                            <div class="down_border">
+                                <b class="icon_top"></b>
+                                <img style="" src="/static/myhome/image/down_load_20160411.png">
+                                <p>快乐生活 快乐购</p>
+                            </div>
+                        </div>
+                        <span class="line"></span>
+                    </li>
+                    <li class="cus_c_box">
+                        <a href="">客服中心</a>
+                        <div class="cus_center">
+                            <a href="">帮助中心</a>
+                            <a href="">会员反馈</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--顶部导航 E-->
+    <!--图片-->
+    <div class="full_sc order_bottom">
+        <div class="w1200 header_conter ">
+            <div class="h_c_logo">
+                <a href="{% url 'shop_homepage' %}">
+                    <img src="/static/myhome/image/logo.jpg"/>
+                </a>
+            </div>
+            <div class="h_c_right">
+                <div class="order_Status"></div>
+            </div>
+        </div>
+    </div>
+    <!--end-->
+</div>
+{% endblock %}
+
 
 {% block con %}
 <section class="cartMain">
-
-		<!-- 标签栏 -->
-        <div class="cartMain_hd">
-            <ul class="order_lists cartTop">
+	<!-- 标签栏 -->
+    <div class="cartMain_hd">
+        <ul class="order_lists cartTop">
+            <li class="list_chk">
+                <!--所有商品全选-->
+                <input type="checkbox" id="all" class="whole_check">
+                <label for="all"></label>
+                全选
+            </li>
+            <li class="list_con">商品信息</li>
+            <li class="list_info">商品参数</li>
+            <li class="list_price">单价</li>
+            <li class="list_amount">数量</li>
+            <li class="list_sum">金额</li>
+            <li class="list_op">操作</li>
+        </ul>
+    </div>
+	<!-- 标签栏 E-->
+	
+    <div class="cartBox">
+        <div class="shop_info">
+            <div class="all_check">
+                <!--店铺全选-->
+                <input type="checkbox" id="shop_a" class="shopChoice">
+                <label for="shop_a" class="shop"></label>
+            </div>
+            <div class="shop_name">
+                店铺：<a href="javascript:;">煎饼自营店</a>
+            </div>
+        </div>
+        <div class="order_content">
+        	{% for v in cartdata %}
+            <ul class="order_lists">
                 <li class="list_chk">
-                    <!--所有商品全选-->
-                    <input type="checkbox" id="all" class="whole_check">
-                    <label for="all"></label>
-                    全选
+                    <input type="checkbox" id="checkbox_{{ v.id }}" class="son_check">
+                    <label for="checkbox_{{ v.id }}" cartid="{{ v.id }}"></label>
                 </li>
-                <li class="list_con">商品信息</li>
-                <li class="list_info">商品参数</li>
-                <li class="list_price">单价</li>
-                <li class="list_amount">数量</li>
-                <li class="list_sum">金额</li>
-                <li class="list_op">操作</li>
+                <li class="list_con">
+                    <div class="list_img"><a href="javascript:;"><img src="{{ v.goodsid.pic_url }}" alt=""></a></div>
+                    <div class="list_text"><a href="javascript:;">{{ v.goodsid.goodsname }}</a></div>
+                </li>
+                <li class="list_info">
+                    <p>规格：默认</p>
+                    <p>描述：{{ v.goodsid.title }}</p>
+                    <p>描述：{{ v.id }}</p>
+                </li>
+                <li class="list_price">
+                    <p class="price">￥{{ v.goodsid.price }}</p>
+                </li>
+                <li class="list_amount">
+                    <div class="amount_box">
+                        <a href="javascript:;" class="reduce reSty" id="num_add{{ v.id }}">-</a>
+                        <input type="text" value="{{ v.num }}" class="sum" cartid="{{ v.id }}">
+                        <a href="javascript:;" class="plus" id="num_reduce{{ v.id }}">+</a>
+                    </div>
+                </li>
+                <li class="list_sum">
+                    <p class="sum_price">￥{% widthratio v.goodsid.price 1 v.num %}</p>
+                </li>
+                <li class="list_op">
+                    <p class="del" ><a href="javascript:;" class="delBtn" cartid="{{ v.id }}">移除商品</a></p>
+                </li>
             </ul>
+            {% endfor %}
         </div>
-		<!-- 标签栏 E-->
-		
-        <div class="cartBox">
-            <div class="shop_info">
-                <div class="all_check">
-                    <!--店铺全选-->
-                    <input type="checkbox" id="shop_a" class="shopChoice">
-                    <label for="shop_a" class="shop"></label>
-                </div>
-                <div class="shop_name">
-                    店铺：<a href="javascript:;">煎饼自营店</a>
-                </div>
-            </div>
-            <div class="order_content">
-            	{% for v in cartdata %}
-                <ul class="order_lists">
-                    <li class="list_chk">
-                        <input type="checkbox" id="checkbox_{{ v.id }}" class="son_check">
-                        <label for="checkbox_{{ v.id }}"></label>
-                    </li>
-                    <li class="list_con">
-                        <div class="list_img"><a href="javascript:;"><img src="{{ v.goodsid.pic_url }}" alt=""></a></div>
-                        <div class="list_text"><a href="javascript:;">{{ v.goodsid.goodsname }}</a></div>
-                    </li>
-                    <li class="list_info">
-                        <p>规格：默认</p>
-                        <p>描述：{{ v.goodsid.title }}</p>
-                        <p>描述：{{ v.id }}</p>
-                    </li>
-                    <li class="list_price">
-                        <p class="price">￥{{ v.goodsid.price }}</p>
-                    </li>
-                    <li class="list_amount">
-                        <div class="amount_box">
-                            <a href="javascript:;" class="reduce reSty" id="num_add{{ v.id }}">-</a>
-                            <input type="text" value="{{ v.num }}" class="sum" cartid="{{ v.id }}">
-                            <a href="javascript:;" class="plus" id="num_reduce{{ v.id }}">+</a>
-                        </div>
-                    </li>
-                    <li class="list_sum">
-                        <p class="sum_price">￥{{ v.goodsid.price }}</p>
-                    </li>
-                    <li class="list_op">
-                        <p class="del" ><a href="javascript:;" class="delBtn" cartid="{{ v.id }}">移除商品</a></p>
-                    </li>
-                </ul>
-                {% endfor %}
-            </div>
-        </div>
+    </div>
 
-        <!--底部-->
-        <div class="bar-wrapper">
-            <div class="bar-right">
-                <div class="piece">已选商品<strong class="piece_num">0</strong>件</div>
-                <div class="totalMoney">共计: <strong class="total_text">0.00</strong></div>
-                <div class="calBtn"><a href="javascript:;">结算</a></div>
-            </div>
+    <!--底部-->
+    <div class="bar-wrapper">
+        <div class="bar-right">
+            <div class="piece">已选商品<strong class="piece_num">0</strong>件</div>
+            <div class="totalMoney">共计: <strong class="total_text">0.00</strong></div>
+            <div class="calBtn"><a href="javascript:;" class="all_btn">结算</a></div>
         </div>
-        <!--底部 E-->
+    </div>
+    <!--底部 E-->
 </section>
 <section class="model_bg"></section>
 <section class="my_model">
@@ -140,6 +222,37 @@
 			// alert(data.msg)
 		},'json')
 	}
+
+	// 商品数量编辑
+	$('.sum').change(function(){
+		// 获取最新的数量和价格
+		var num = $(this).val()
+		var inp = $(this).parents('.amount_box').find('.sum')
+		var cartid = inp.attr('cartid')
+		RequestcartNum(cartid,num)
+	})
+
+    // 结算
+    $('.all_btn').click(function(){
+        var cartids = getid()
+        // 是否选择了购买的商品
+        if(cartids.length == 0){
+            alert('请先选择要购买的商品')
+            return;
+        }
+
+        location.href="{% url 'shop_cart_confirm' %}?cartids="+cartids
+    })
+
+    // 获取id
+    function getid(){
+        var cartids = []
+        // 获取页面中所有的选框
+        $('.order_content').find('.mark').each(function(){
+            cartids.push($(this).attr('cartid'))
+        })
+        return cartids
+    }
 </script>
 {% endblock %}
 

@@ -372,12 +372,8 @@ input[type="text"], input[type="password"], input.text, input.password {
     overflow: hidden;
     padding-bottom: 10px;
     height: 20px;
-}
-.p_border_bottom {
-    border-bottom: 1px dotted #efefef;
-    overflow: hidden;
-    padding-bottom: 10px;
-    height: 20px;
+    width: 115px;
+
 }
 .p_prices {
     width: 115px;

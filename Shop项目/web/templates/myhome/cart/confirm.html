@@ -1,0 +1,316 @@
+{% extends 'myhome/muban/muban.html' %}
+
+{% block title %}
+<title>提交订单</title>
+{% endblock %}
+
+{% block css%}
+<link rel="stylesheet" type="text/css" href="/static/myhome/css/go.css" />
+{% endblock %}
+
+{% block header %}
+<!--头部-->
+<div class="header">
+    <!--顶部导航-->
+    <div class="header_top">
+        <div class="w1200">
+            <!-- 登录标签 -->
+            <div class="h_t_l">
+                <!-- 判断是否已经登录 -->
+                {% if request.session.vipUser %}
+                    <div class="login_l">
+                        <span>欢迎来到快乐购,尊敬的</span>
+                        <span>{{ request.session.vipUser.nikename }}</span>
+                        <a class="a_login" href="{% url 'shop_logout' %}">[退出登录]</a>
+                    </div>
+                {% else %}
+                    <div class="login_l">
+                        <span>欢迎来到快乐购!</span>
+                        <a class="a_login" href="{% url 'shop_login' %}">[登录]</a>
+                        <span class="line"></span>
+                        <a class="" href="{% url 'shop_register' %}">[注册]</a>
+                    </div>
+                {% endif %}
+            </div>
+            <!-- 登录标签 E -->
+            <!-- 其它标签 -->
+            <div class="h_t_r">
+                <ul>
+                    <li>
+                        <a href="">订单查询</a>
+                        <span class="line"></span>
+                    </li>
+                    <li>
+                        <a href="">我的快乐购</a>
+                        <span class="line"></span>
+                    </li>
+                    <li>
+                        <i class="tel_icon"></i>
+                        <a href="">400-705-1111</a>
+                        <span class="line"></span>
+                    </li>
+                    <li>
+                        <a href="">下载快乐购app</a>
+                        <div class="down_load">
+                            <div class="down_border">
+                                <b class="icon_top"></b>
+                                <img style="" src="/static/myhome/image/down_load_20160411.png">
+                                <p>快乐生活 快乐购</p>
+                            </div>
+                        </div>
+                        <span class="line"></span>
+                    </li>
+                    <li class="cus_c_box">
+                        <a href="">客服中心</a>
+                        <div class="cus_center">
+                            <a href="">帮助中心</a>
+                            <a href="">会员反馈</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--顶部导航 E-->
+    <!--图片-->
+	<div class="full_sc order_bottom">
+		<div class="w1200 header_conter ">
+			<div class="h_c_logo">
+				<a href="{% url 'shop_homepage' %}">
+					<img src="/static/myhome/image/logo.jpg" />
+				</a>
+			</div>
+			<div class="h_c_right">
+				<div class="order_Status os_oredr"></div>
+			</div>
+		</div>
+	</div>
+	<!--end-->
+</div>
+{% endblock %}
+
+{% block con %}
+<!-- 内容区域 -->
+<div class="public_b">
+	<form action="{% url 'shop_cart_create' %}" method="post">
+		{% csrf_token %}
+		<div class="w1200">
+			<div class="h2">确认订单信息</div>
+			<!--地址选择-->
+			<div class="o_o_content">
+				<h2 class="part_h2">
+					1 地址选择
+					<span class="addr_errtips">
+						<i class="icon_err"></i>
+						您好！此地址不在该商品配送区域范围内，请选择其他收货地址！
+					</span>
+				</h2>
+				<!-- 地址表单 -->
+				<div class="new_addr">
+					<div class="ncc-form-default">
+						<form action="" method="post">
+							<dl>
+								<dt><i class="required">*</i>收货人姓名：</dt>
+								<dd>
+									<input class="text w100" name="true_name" maxlength="20" id="true_name" value="" type="text">
+								</dd>
+							</dl>
+							<dl>
+								<dt><i class="required">*</i>所在地区：</dt>
+								<dd>
+									<div id="region">
+										<select name="statename" id="statename">
+		            	                    <option value="0">请选择省份</option>
+		            						<option value="P10">北京市</option>
+											<option value="P11">上海市</option>
+											<option value="P12">天津市</option>
+											<option value="P13">河北省</option>
+											<option value="P14">黑龙江省</option>
+											<option value="P15">吉林省</option>
+											<option value="P16">辽宁省</option>
+											<option value="P17">内蒙古自治区</option>
+											<option value="P18">山西省</option>
+											<option value="P19">陕西省</option>
+											<option value="P20">宁夏回族自治区</option>
+											<option value="P21">甘肃省</option>
+											<option value="P22">青海省</option>
+											<option value="P23">新疆维吾尔自治区</option>
+											<option value="P24">西藏自治区</option>
+											<option value="P25">四川省</option>
+											<option value="P26">河南省</option>
+											<option value="P27">山东省</option>
+											<option value="P28">江苏省</option>
+											<option value="P29">安徽省</option>
+											<option value="P30">湖北省</option>
+											<option value="P31">湖南省</option>
+											<option value="P32">贵州省</option>
+											<option value="P33">云南省</option>
+											<option value="P34">江西省</option>
+											<option value="P35">浙江省</option>
+											<option value="P36">福建省</option>
+											<option value="P37">广东省</option>
+											<option value="P38">广西壮族自治区</option>
+											<option value="P39">海南省</option>
+											<option value="P41">重庆市</option>
+											<option value="P42">台湾省</option>
+								        </select>
+										<select name="city" id="city">
+											<option>请选择城市</option>
+										</select>
+										<select name="county" id="county">
+											<option>请选择区县</option>
+										</select>
+										<select name="town" id="town" style="display:none;" >
+											<option>请选择乡镇</option>
+										</select>
+									</div>
+								</dd>
+							</dl>
+							<dl>
+								<dt><i class="required">*</i>详细地址：</dt>
+								<dd>
+									<input class="text w500" name="address" id="address" maxlength="80" value="" type="text">
+									<p class="hint">请填写真实地址，不需要重复填写所在地区</p>
+								</dd>
+							</dl>
+							<dl>
+								<dt> <i class="required">*</i>手机号码：</dt>
+								<dd>
+									<input class="text w200" name="mob_phone" id="mob_phone" maxlength="15" value="" type="text"> &nbsp;&nbsp;(或)&nbsp;固定电话： <input class="text w200" id="tel_phone" name="tel_phone" maxlength="20" value="" type="text">
+								</dd>
+							</dl>
+							<div class="btn_item">
+								<a href="javascript:;" class="btn_addaddr">确定</a>　<a href="javascript:;" class="btn_addaddr" onclick="submitAddList();">返回</a>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- 地址表单 E -->
+				<!-- 添加新地址 -->
+				<!-- <div style="display: none;" class="addr_list" id="addr_list">
+					<ul>
+						<li class="addr_new">
+							<div class="btn_new_addr" nc_type="addr" id="add_addr">添加新地址</div>
+						</li>
+					</ul>
+				</div> -->
+				<!-- 添加新地址 E -->
+				<!--支付方式-->
+				<div class="o_o_part o_o_part2">
+					<h2 class="part_h2">2 支付方式</h2>
+					<div class="pay_type">
+						<ul>
+							<li class="on" payment_code="online">
+								在线支付<b></b>
+							</li>
+							<li payment_code="offline">
+								货到付款<b></b>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--支付方式-->
+				<!--商品清单-->
+				<div class="o_o_part o_o_part3">
+					<h2 class="part_h2">3&nbsp;商品清单<a class="a_return_car" href="{% url 'shop_cart_index' %}"> &lt; 返回购物车</a></h2>
+					<div class="oder_shop">
+						<!--订单列表表头-->
+						<div class="shop_tit">
+							<div class="cart_checkbox">
+								<span>商品名称</span>
+							</div>
+							<div class="column cart_standard">规格</div>
+							<div class="column t_price">单价(元)</div>
+							<div class="column t_quantity">数量</div>
+							<div class="column t_sum">小计(元)</div>
+						</div>
+						<!--订单列表表头 E-->
+						<!--订单列表-->
+						<div class="item_list">
+							{% for v in cartdata %}
+							<div class="item_form">
+								<div class="cell p_checkbox"></div>
+								<div class="cell p_goods">
+									<div class="goods_item">
+										<div class="p_imgs">
+											<a target="_blank" href="">
+												<img src="{{ v.goodsid.pic_url }}" style="width:100%">
+											</a>
+										</div>
+										<div class="item_msg">
+											<div class="p_border_bottom"  style="width:100%">
+												<div class="p_name">
+													<a target="_blank" href="">{{ v.goodsid.goodsname }}</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="cell p_standard">
+									<p class="p_g_standard p_border_bottom"></p>
+								</div>
+								<div class="cell p_price p_border_bottom">
+									<p class="p_prices2" style="text-align:center">{{ v.goodsid.price }}</p>
+								</div>
+								<div class="cell p_quantity">
+									<div class="quantity_form p_border_bottom">x{{ v.num }}</div>
+								</div>
+								<div class="cell p_sum p_border_bottom">
+									<strong class="all_price">{% widthratio v.goodsid.price 1 v.num %}</strong>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+						<!--订单列表 E-->
+						<!--结算-->
+						<div class="yhxx_box">
+							<ul class="yhxx_list">
+								<li>
+									<div class="yhxx_tit">商品总额<span class="yhxx_money">￥<span class="s_order_money">199</span> </span>
+									</div>
+								</li>
+								<me id="paypromotion"></me>
+								<me id="paypromotion_info"></me>
+								<li>
+									<div class="yhxx_tit">优惠券<span class="yhxx_money"><span class="s_jian">-</span>￥<span id="voucher_price">0</span> </span></div>
+								</li>
+								<li class="margin_top10">
+									<div class="yhxx_tit">本单应付 <span class="yhxx_money">￥<span class="s_sum s_order_money">199</span> </span>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<!--结算-->
+						<!--提交订单-->
+						<div class="btnsure_bg">
+							<div class="sureorder">
+								<div class="jine">应付总额：<span class="fwxh_30">￥</span><span class="span_m s_order_money">199</span></div>
+								<a class="un_btn_sure" id="btn_sure" href="javascript:void(0);">提交订单</a>
+								<!-- 隐藏域 传递当前的购物车id -->
+								<input type="hidden" name="cartids0" value="{{ request.GET.cartids }}">
+							</div>
+						</div>
+						<!--提交订单 E-->
+					</div>
+				</div>
+				<!--商品清单 E-->
+			</div>
+			<!--地址选择end-->
+		</div>
+	</form>
+</div>
+<script>
+	var totalPrice = 0
+	// 计算总价
+	$('.all_price').each(function(){
+		totalPrice +=Number($(this).text())
+	})
+	$('.s_order_money').text(totalPrice)
+
+	// 订单提交事件
+	$('.un_btn_sure').click(function(){
+		// 检测是否填写了收获信息
+		$('form').submit()
+	})
+</script>
+{% endblock %}

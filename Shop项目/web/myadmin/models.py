@@ -21,7 +21,6 @@ class Users(models.Model):
     status = models.IntegerField(default=0)
     addtime = models.DateTimeField(auto_now_add=True)
 
-
 # 商品分类模型
 class Cates(models.Model):
     name = models.CharField(max_length=20)
@@ -50,4 +49,24 @@ class Cart(models.Model):
     # id 用户uid 商品goodsid 数量num
     uid = models.ForeignKey(to="Users",to_field="id")
     goodsid = models.ForeignKey(to="Goods",to_field="id")
+    num = models.IntegerField()
+
+# 订单
+class Order(models.Model):
+    uid = models.ForeignKey(to="Users",to_field="id")
+    username = models.CharField(max_length=20)
+    phone = models.CharField(max_length=11)
+    address = models.CharField(max_length=255)
+    totalprice = models.FloatField()
+    # 0 未支付 1已支付 2已发货 3已收货 4以评价 5取消
+    status = models.IntegerField(default=0)
+    # 0支付宝 1.微信 3银联 4其它 4货到付款
+    paytype = models.IntegerField(default=0)
+    addtime = models.DateTimeField(auto_now_add=True)
+    paytime = models.DateTimeField(null=True)
+
+# 订单详情
+class OrderInfo(models.Model):
+    orderid = models.ForeignKey(to="Order", to_field="id")
+    goodsid = models.ForeignKey(to="Goods", to_field="id")
     num = models.IntegerField()
