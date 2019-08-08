@@ -30,7 +30,7 @@ urlpatterns = [
 
 #################### 购物车 ######################
 
-    # 添加
+    # 添加shop_cart_num
     url(r'^cart/add/$', CartViews.shop_cart_add,name='shop_cart_add'),
     # 列表
     url(r'^cart/index/$', CartViews.shop_cart_index,name='shop_cart_index'),
@@ -40,6 +40,8 @@ urlpatterns = [
     url(r'^cart/clear/$', CartViews.shop_cart_clear,name='shop_cart_clear'),
     # 编辑
     url(r'^cart/edit/$', CartViews.shop_cart_edit,name='shop_cart_edit'),
+    # 数量统计
+    url(r'^cart/num/$', CartViews.shop_cart_num,name='shop_cart_num'),
 
 
 #################### 订单 ######################
@@ -56,6 +58,9 @@ urlpatterns = [
     # 我的订单
     url(r'^center/order/$', CenterViews.shop_center_order, name='shop_center_order'),
 
+#################### 支付 ######################
+    # 支付回调
+    url(r'^order/pay_result/$', CartViews.shop_pay_resul,name='shop_pay_resul'),
 
 #################### 其他 ######################
 
@@ -65,6 +70,8 @@ urlpatterns = [
     url(r'^GlobalPurchase/$', OrderViews.shop_GlobalPurchase,name='shop_GlobalPurchase'),
     # 品牌馆
     url(r'^BrandPavilion/$', OrderViews.shop_BrandPavilion,name='shop_BrandPavilion'),
+
+
 
 ]
 

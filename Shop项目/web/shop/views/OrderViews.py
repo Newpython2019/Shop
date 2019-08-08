@@ -1,6 +1,6 @@
 ############### 其他模块 ###############
 from django.shortcuts import render
-from django.http import HttpResponse,Http404
+from django.http import HttpResponse,Http404,JsonResponse
 
 # 精选品牌
 def shop_SelectedBrands(request):

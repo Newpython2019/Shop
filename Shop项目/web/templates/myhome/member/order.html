@@ -54,7 +54,7 @@
 		<div class="ur_location">
 			<a href="">我的快乐购</a>
 			<span>&gt;</span>
-			<a class="a_cur">我的订单</a>
+			<a class="a_cur" href="{% url 'shop_center_order' %}">我的订单</a>
 		</div>
 		<!--uer_top-->
 		<div class="ur_r_list">
@@ -126,7 +126,7 @@
 					<tr class="tr_bd">
 						<td class="goods-item">
 							<div class="p-img">
-								<a href="" target="_blank">
+								<a href="{% url 'shop_info' %}?goodsid={{ vv.goodsid.id }}" target="_blank">
 									<img class="" src="{{ vv.goodsid.pic_url }}" title="" height="60" width="60">
 								</a>
 							</div>
@@ -147,7 +147,23 @@
 						</td>
 						<td rowspan="1">
 							<div class="status">
-								<span class="order-status"><span style="color:#999">已取消</span></span><br>
+								<span class="order-status">
+									<span style="color:#999">
+										{% if v.status == 0 %}
+											未支付
+										{% elif v.status == 1 %}
+											以支付
+										{% elif v.status == 2 %}
+											2已发货
+										{% elif v.status == 3 %}
+											3已收货
+										{% elif v.status == 4 %}
+											4以评价
+										{% elif v.status == 5 %}
+											5取消
+										{% endif %}
+									</span>
+								</span><br>
 								<a href="" target="_blank">订单详情</a>
 							</div>
 						</td>
@@ -180,7 +196,6 @@
 					<li class="next a_btn">
 						<a href=""><span>下一页<b>></b></span></a>
 					</li>
-				</ul>
 			</div>
 		</div>
 		<!--分页end-->

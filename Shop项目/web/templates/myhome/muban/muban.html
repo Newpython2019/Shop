@@ -40,7 +40,7 @@
 					clearInterval(time);
 				},function(){
 					//时间继续
-					time = setInterval(timer,2000);
+					time = setInterval(timer,3000);
 				});
 				//给色块添加一个移入移出事件
 				$("#inBaner .btn ul li").mouseenter(function(){
@@ -103,7 +103,7 @@
 					<div class="h_t_r">
 						<ul>
 							<li>
-								<a href="">订单查询</a>
+								<a href="{% url 'shop_center_order' %}">订单查询</a>
 								<span class="line"></span>
 							</li>
 							<li>
